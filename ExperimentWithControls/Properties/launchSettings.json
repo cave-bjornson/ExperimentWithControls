@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ExperimentWithControls (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ExperimentWithControls (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
