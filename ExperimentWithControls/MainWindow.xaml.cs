@@ -1,17 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -27,6 +16,53 @@ namespace ExperimentWithControls
         public MainWindow()
         {
             this.InitializeComponent();
+        }
+
+        private void NumberTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Number.Text = NumberTextBox.Text;
+        }
+
+        private void NumberTextBox_OnBeforeTextChanging(
+            TextBox sender,
+            TextBoxBeforeTextChangingEventArgs args
+        )
+        {
+            args.Cancel = !int.TryParse(args.NewText, out int _);
+        }
+
+        private void RadioButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton radioButton)
+            {
+                Number.Text = radioButton.Content.ToString();
+            }
+        }
+
+        private void MyBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is Selector { SelectedItem: string item })
+            {
+                Number.Text = item;
+            }
+        }
+
+        private void EditableComboBox_OnTextSubmitted(
+            ComboBox sender,
+            ComboBoxTextSubmittedEventArgs args
+        )
+        {
+            args.Handled = !int.TryParse(args.Text, out int _);
+        }
+
+        private void SmallSlider_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            Number.Text = SmallSlider.Value.ToString("0");
+        }
+
+        private void BigSlider_OnValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            Number.Text = BigSlider.Value.ToString("000-000-0000");
         }
     }
 }
